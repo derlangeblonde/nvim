@@ -110,7 +110,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -228,6 +228,8 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
+  -- My Plugins
+  { "vrischmann/tree-sitter-templ" }
 }, {})
 
 -- [[ Setting options ]]
@@ -243,10 +245,13 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+-- Set relative line numbers
+vim.o.relativenumber = true
+
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -333,7 +338,8 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
+      'bash' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -395,7 +401,15 @@ vim.defer_fn(function()
     },
   }
 end, 0)
-
+local treesitter_parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+treesitter_parser_config.templ = {
+  install_info = {
+    url = "https://github.com/vrischmann/tree-sitter-templ.git",
+    files = { "src/parser.c", "src/scanner.c" },
+    branch = "master",
+  },
+}
+vim.treesitter.language.register('templ', 'templ')
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -559,6 +573,12 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+-- My remaps
+vim.api.nvim_set_keymap('n', 'U', '<Cmd>redo<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-r>', '<Cmd>!go run .<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-t>', '<Cmd>!go test ./... -v<CR>', { noremap = true, silent = true })
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
