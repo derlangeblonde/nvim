@@ -229,7 +229,12 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
   -- My Plugins
-  { "vrischmann/tree-sitter-templ" }
+  { "vrischmann/tree-sitter-templ" },
+  {
+  'kaarmu/typst.vim',
+  ft = 'typst',
+  lazy=false,
+  }
 }, {})
 
 -- [[ Setting options ]]
