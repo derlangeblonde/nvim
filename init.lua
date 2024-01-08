@@ -582,6 +582,8 @@ cmp.setup {
 vim.api.nvim_set_keymap('n', 'U', '<Cmd>redo<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-r>', '<Cmd>!go run .<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-t>', '<Cmd>!go test ./... -v<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>y', '"*y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>p', '"*p', { noremap = true, silent = true })
 
 
 
