@@ -579,11 +579,14 @@ cmp.setup {
   },
 }
 -- My remaps
+local is_mac = vim.fn.has("mac") == 1
+local clipboard_register = is_mac and "*" or "+"
+
 vim.api.nvim_set_keymap('n', 'U', '<Cmd>redo<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-r>', '<Cmd>!go run .<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-t>', '<Cmd>!go test ./... -v<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<leader>y', '"*y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<leader>p', '"*p', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>y', '"' .. clipboard_register .. 'y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>p', '"' .. clipboard_register .. 'p', { noremap = true, silent = true })
 
 
 
